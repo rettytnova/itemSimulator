@@ -31,6 +31,7 @@ router.post('/item/create', async(req, res, next) => {
 // 아이템 정보 수정 (name, health, power)
 router.patch('/item/modify/:id', async(req, res, next) => {
     const id = parseInt(req.params.id, 10);
+    const {name, health, power } = req.body;
 
     const item = await prisma.item.findUnique({
         where: {
@@ -42,10 +43,13 @@ router.patch('/item/modify/:id', async(req, res, next) => {
     }    
     
     const modifiedItem = await prisma.item.update({
+        where: {
+            id: id,
+        },
         data: {
-            name: item.name,
-            health: item.health,
-            power: item.power,
+            name,
+            health,
+            power,
         },
     });
     
