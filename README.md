@@ -67,7 +67,7 @@ insomnia등을 사용하여 실행시 api 기능 사용 Tooltip
 {
 	"name": "수정할 아이템이름",
 	"health": "수정할 수치(int)", // 생략 가능 (default : 10)
-  "power": "수정할 수치(int)" // 생략 가능 (default : 1)
+  	"power": "수정할 수치(int)" // 생략 가능 (default : 1)
 }
 ```
 
