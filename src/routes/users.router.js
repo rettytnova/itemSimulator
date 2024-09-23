@@ -104,9 +104,6 @@ router.delete('/character/delete/:id',authMiddlewares, async (req, res, next) =>
         where: {
             id: characterId,
         },
-        include: {
-            accountId: true,
-        },
     });
     if(!character){
         return res.status(404).json({ message: '존재하지 않는 캐릭터입니다.'});
