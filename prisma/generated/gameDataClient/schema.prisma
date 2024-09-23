@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/gameDataClient"
+}
+
+datasource gamedb {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id        Int    @id @default(autoincrement())
+  accountId String @unique
+  password  String
+  name      String
+
+  characters Character[]
+}
+
+model Character {
+  id        Int    @id @default(autoincrement())
+  name      String @unique
+  health    Int    @default(500)
+  power     Int    @default(100)
+  money     Int    @default(10000)
+  accountId Int    @map("account_id")
+
+  inventory Inventory[]
+  equipment Equipment[]
+  account   Account     @relation(fields: [accountId], references: [id], onDelete: Cascade)
+}
+
+model Item {
+  id        Int    @id @default(autoincrement())
+  item_code Int    @unique
+  item_name String @unique
+  health    Int    @default(10)
+  power     Int    @default(1)
+  price     Int    @default(10)
+}
+
+model Inventory {
+  id          Int @id @default(autoincrement())
+  itemId      Int @map("itemId")
+  characterId Int @map("characterId")
+
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+}
+
+model Equipment {
+  id          Int @id @default(autoincrement())
+  itemId      Int
+  characterId Int @unique @map("characterId")
+
+  character Character @relation(fields: [characterId], references: [id], onDelete: Cascade)
+}
